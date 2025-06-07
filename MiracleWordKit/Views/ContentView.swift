@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct ContentView: View {
@@ -24,6 +23,7 @@ struct ContentView: View {
                 }
             }
         }
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
@@ -39,12 +39,12 @@ struct MainMenuView: View {
                     .padding(.horizontal, -8)
                     .shadow(color: .blue.opacity(0.18), radius: 16, x: 0, y: 8)
                 Text("Guess the Word")
-                    .font(.system(size: 40, weight: .heavy, design: .rounded))
+                    .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 50 : 40, weight: .heavy, design: .rounded))
                     .foregroundColor(.blue)
                     .shadow(color: .white, radius: 0, x: 0, y: 0)
                     .shadow(color: .blue.opacity(0.4), radius: 8, x: 0, y: 4)
             }
-            .padding(.top, 30)
+            .padding(.top, UIDevice.current.userInterfaceIdiom == .pad ? 50 : 30)
             
             NavigationLink(destination: GameView(gameModel: gameModel, levelToStart: gameModel.lastUnlockedLevel)) {
                 MenuButton(title: "Play")
@@ -67,7 +67,8 @@ struct MainMenuView: View {
             .buttonStyle(CartoonButtonStyle(gradient: Gradient(colors: [.green, .yellow]), shadow: .green))
             Spacer()
         }
-        .padding(.horizontal, 24)
+        .padding(.horizontal, UIDevice.current.userInterfaceIdiom == .pad ? 40 : 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
@@ -76,10 +77,9 @@ struct MenuButton: View {
     
     var body: some View {
         Text(title)
-            .font(.title2)
-            .fontWeight(.heavy)
+            .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 28 : 22, weight: .heavy))
             .foregroundColor(.white)
-            .frame(maxWidth: .infinity, minHeight: 56)
+            .frame(maxWidth: .infinity, minHeight: UIDevice.current.userInterfaceIdiom == .pad ? 70 : 56)
     }
 }
 
@@ -107,7 +107,7 @@ struct CartoonBackground: View {
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
-        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.all)
     }
 }
 

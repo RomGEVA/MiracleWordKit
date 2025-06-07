@@ -14,11 +14,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else {return}
-        window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = UIHostingController(rootView: ContentView())
-        window?.makeKeyAndVisible()
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        let window = UIWindow(windowScene: windowScene)
+        let contentView = ContentView()
+        let hostingController = UIHostingController(rootView: contentView)
+        
+        // Настройка для полноэкранного режима
+        hostingController.view.backgroundColor = .clear
+        window.rootViewController = hostingController
+        
+        // Устанавливаем размер окна равным размеру экрана
+        window.frame = windowScene.coordinateSpace.bounds
+        
+        window.makeKeyAndVisible()
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -29,8 +39,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        if let windowScene = scene as? UIWindowScene {
+            window?.frame = windowScene.coordinateSpace.bounds
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -49,6 +60,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    func windowScene(_ windowScene: UIWindowScene, didUpdate previousCoordinateSpace: UICoordinateSpace, interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation, traitCollection previousTraitCollection: UITraitCollection) {
+        window?.frame = windowScene.coordinateSpace.bounds
+    }
 }
 

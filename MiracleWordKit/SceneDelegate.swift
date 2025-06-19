@@ -15,20 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        let window = UIWindow(windowScene: windowScene)
-        let contentView = ContentView()
-        let hostingController = UIHostingController(rootView: contentView)
-        
-        // Настройка для полноэкранного режима
-        hostingController.view.backgroundColor = .clear
-        window.rootViewController = hostingController
-        
-        // Устанавливаем размер окна равным размеру экрана
-        window.frame = windowScene.coordinateSpace.bounds
-        
-        window.makeKeyAndVisible()
-        self.window = window
+        window = UIWindow(windowScene: windowScene)
+        let loadingSplash = LoadingSplash()
+        window?.rootViewController = loadingSplash
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
